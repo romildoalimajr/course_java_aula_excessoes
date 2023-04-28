@@ -11,7 +11,7 @@ public class Program {
 		// TODO Auto-generated method stub
 		Locale.setDefault(Locale.US);
 		Scanner sc = new Scanner(System.in);
-		
+
 		System.out.println("Informe os dados da conta:");
 		System.out.print("Numero.: ");
 		int number = sc.nextInt();
@@ -22,23 +22,21 @@ public class Program {
 		double balance = sc.nextDouble();
 		System.out.print("Limite de saque: ");
 		double withdrawLimit = sc.nextDouble();
-		
+
 		Account acc = new Account(number, holder, balance, withdrawLimit);
-		
+
 		System.out.println();
 		System.out.print("Informe uma quantia para sacar: ");
 		double amount = sc.nextDouble();
-		
-		acc.withDraw(amount);
-		
-		if(amount > acc.getWithDrawLimit()) {
-			System.out.println("Erro de saque: A quantia excede o limite de saque");
-		}else if(amount > acc.getBalance()) {
-			System.out.println("Erro de saque: Saldo Insuficiente");
-		}else {
+
+		String error = acc.validateWithdraw(amount);
+		if (error != null) {
+			System.out.println(error);
+		} else {
+			acc.withDraw(amount);
 			System.out.printf("Novo saldo: %.2f%n", acc.getBalance());
 		}
-		
+
 		sc.close();
 
 	}
